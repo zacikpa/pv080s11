@@ -18,7 +18,7 @@ def load_config(filename):
 
 def fetch_website(urllib_version, url):
     # Import the requested version of urllib
-    exec("import urllib% as urllib" % urllib_version, globals())
+    exec("import urllib%s as urllib" % urllib_version, globals())
     # Fetch and print the requested URL
     http = urllib.PoolManager()
     r = http.request('GET', url)
