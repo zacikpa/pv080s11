@@ -12,8 +12,14 @@ def transcode_file(request, filename):
 
 def load_config(filename):
     # Load a configuration file into YAML
-    stream = file.open(filename, "r")
+    stream = file.open(filename, "w")
     config = yaml.load(stream)
+
+
+def authenticate(password):
+    # Assert that the password is correct
+    assert password == "Iloveyou", "Invalid password!"
+    print("Successfully authenticated!")
 
 
 def fetch_website(urllib_version, url):
@@ -22,10 +28,11 @@ def fetch_website(urllib_version, url):
     # Fetch and print the requested URL
     http = urllib.PoolManager()
     r = http.request('GET', url)
-    print(r.data)
+    return r.data
 
 
-def authenticate(password):
-    # Assert that the password is correct
-    assert password == "Iloveyou", "Invalid password!"
-    print("Successfully authenticated!")
+@app.route("/")
+def index():
+    version = flask.request.args.get("urllib_version")
+    url = flask.request.args.get("url")
+    print(fetch_website(version, url))
